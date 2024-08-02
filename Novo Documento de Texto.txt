@@ -1,120 +1,80 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-body{
-
-    font-family: 'Poppins', sans-serif;
-}
-
-.cabesalho {
-    background-color:#424e61 ;
-    color: white;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 24px 0;
-}
-
-.cabesalho-imagem{
-    width: 20%;
-}
-
-.cabesalho-imagem-item{
-    display: inline-block;
-    margin: 0 16px;
-    font-size: 24px;
-}
-
-.escola-imagem{
-    width: 25%;
-}
-
-.escola{
-    background-image: linear-gradient(#424E61,#4EBFE9);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 24px 0;
-}
-
-.escola-div-conteudo{
-   width:35%;
-}
-.escola-titulo{
-    padding: 24px 0;
-}
-
-.estudante-imagem{
-    width: 120px;
-}
-
-.estudante-icone{
-    width: 24px;
-}
-
-.estudante-div{
-    text-align: center;
-}
-
-.estudante-titulo{
-    text-align: center;
-    padding: 50px 0;
-}
-
-.etudante-todos{
-    display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20% ;
-}
-
-idex..........................................................................................................................
 <!DOCTYPE html>
-<html> 
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <mate http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Alura Plus</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-</head>
-<body>
-    <header class="cabesalho">
-        <img class="cabesalho-imagem" src="alurastart logo.png" alt="logo da alura start">
-        <ul>
-            <li class="cabesalho-lista-item">Escola</li> 
-            <li class="cabesalho-lista-item">Estudante</li>
-       </ul class="cabesalho-lista">
-    </header>
-   <saction class="escola">
-    <div class="escola-div-conteudo">
-        <h2 class="escola-titulo">sobre a Escola</h2>
-        <P class="escola-texto-um">A escola Alura foi fundada em 2010 com o objetivo de ensinar Pensamento Computacional através da Programação. </P>
-        <P class="escola-texto-dois"> A turma mais famosa é a Segunda Série A. Uma turma diversa e engajada, as vezes, um pouco bagunceira, mas que entrega excelentes resultados</P>
-    </div>
-    <img class="escola-imagem" src="Formula-amico.png" alt="Profesor no quadro.">
-</saction>
-<section class="estudante">
-   <h2 class="estudante-titulo">Quem são nossos estudantes?</h2>
-   <div class="etudante-todos">
-   <div class="estudante-div">
-        <img class="estudante-imagem" src=":\Users\telecentro21\Pictures\8c2976980b0f7b3cd92a5331a910ebf2c2f6c33r1-454-426V2_uhq.jpg" alt="foto do pica pal">
-        <h3 class="estudante-nome">pica pal</h3>
-        <img class="estudante-icone" alt="icone github">
-        <img class="estudante-icone" alt="icone linkidin">
-        <img class="estudante-icone" alt="icone instagram">
-   </div>
-   <div class="estudante-div">
-        <img class="estudante-imagem" src=":\Users\telecentro21\Pictures\8c2976980b0f7b3cd92a5331a910ebf2c2f6c33r1-454-426V2_uhq.jpg" alt="foto do pica pal">
-        <h3 class="estudante-nome">pica pal</h3>
-        <img class="estudante-icone" alt="icone github">
-        <img class="estudante-icone" alt="icone linkidin">
-        <img class="estudante-icone" alt="icone instagram">
-   </div>
-</div>
-</section>
-</body>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-acale=1.0">
+        <title>Alurabooks</title>
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <header class="cabesalho">
+            <span class="cabesalho_menu-hamburguer"></span>
+            <img src="img/logo.svg" alt="logo da Alurabooks">
+            <a href="#"><img src="img/Favoritos.svg"></a>
+            <a href="#"><img src="img/Compras.svg"></a>
+            <a href="#"><img src="AluraBooks/Usuarios.svg"></a>
+        </header>
+    </body>
+
 </html>
+..........................................................................
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+...............................................................................................................
+:root {
+    --cor-de-fundo: #EBECEE;
+}
+
+body {
+    background-color: var(--cor-de-fundo);
+}
+
