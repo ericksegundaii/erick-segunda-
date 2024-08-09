@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-acale=1.0">
+        <title>Alurabooks</title>
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <header class="cabesalho">
+            <div class="container">
+                 <span class="cabesalho_menu-hamburguer container__imagem"></span>
+                 <img src="img/Logo.svg" alt="logo da Alurabooks" class="container__imagem">
+            </div>    
+            <div class="container"></div>
+                <a href="#"><img src="img/Favoritos.svg" alt="Meus Favoritos" class="container__imagem"></a>
+                <a href="#"><img src="img/Compras.svg" alt="Carrinhos de Compras" class="container__imagem"></a>
+                <a href="#"><img src="img/Usuário.svg" alt="Meu perfil" class="container__imagem"></a>
+        </div>
+        </header>
+    </body>
+
+</html>
+........................................................................................................................
+.cabesalho_menu-hamburguer {
+    width: 36px;
+    height: 36px;
+    background-image: url("../img/Menu.svg");
+    display: inline-block;
+}
+
+.cabesalho {
+    background-color:var(--branco) ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.container__imagem {
+
+}
+.................;;;;.;.;.;........................................................................................................
+@import url("styles/header.css");
+
+:root {
+    --cor-de-fundo: #ebecee;
+    --branco: #FFFFFF;
+}
+
+
+body {
+    background-color: var(--cor-de-fundo-);
+}
