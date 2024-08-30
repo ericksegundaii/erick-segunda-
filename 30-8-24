@@ -1,0 +1,414 @@
+body{
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 153, 1) 0%,
+        rgba(0, 153, 153, 50) 100%
+      );
+}
+.scoreboard{
+    /* background-color: rgb(175, 175, 175); */
+    display: inline-block;
+    width: 100%;
+}
+.wins,.loss,.draw, span{
+    display: inline-flex;
+    color: rgb(230, 230, 230);
+    font-size: 20px;
+    width: 15%;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+}
+.loss{
+    color: rgb(126, 3, 3);
+}
+.wins{
+    color: rgb(42, 94, 29); 
+}
+#jogo{
+    
+    display: grid;
+    width: 100%;
+    height: 98%;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3);
+}
+ 
+.linha{
+    height:200px;
+    border-color:aliceblue;
+}
+
+#casa1, #casa4, #casa7{
+    border-right: solid 0px;
+    border-color:aliceblue;
+}
+
+#casa2, #casa5, #casa8{
+    border-left: solid 5px;
+    border-right: solid 5px;
+    border-color:aliceblue;
+}
+
+#casa3, #casa6, #casa9{
+    border-left: solid 0px;
+    border-color:aliceblue;
+}
+
+#casa4, #casa5, #casa6{
+    border-top: solid 5px;
+    border-bottom: solid 5px;
+    border-color:aliceblue;
+}
+ 
+.casa{
+    
+    border-left: solid 0px;
+    display: flex;
+    font-size: 100px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width:200px;
+    height:100%;
+    border-right:solid 0px;
+    float:left;
+    border-color:aliceblue;
+    cursor:pointer;
+}
+#resultado{
+    font-size: 50px;
+    margin-top: 15px;
+}
+
+button {
+    background-color: rgb(54, 54, 54); /* preto */
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor:pointer;
+    margin-top: 5px;
+    margin-bottom: 55px;
+}
+
+button:hover{
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+.author{
+    font-family:'Courier New', Courier, monospace;
+    font-size: 12px;
+    color: white;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    text-align: center;
+}
+.author::before{
+    display: inline-block;
+    content:"by Jonas Martinez"
+}
+
+
+var PLAYER_TIME;
+var scoreboard = [0,0,0] //score: [0] WINS; [1] LOSS; [2] DRAW
+var IA = false;
+var playsPossible;
+var marks;
+var btnIA = document.getElementById("buttonIA");
+var restartBtn = document.getElementById('button');
+const casas = document.querySelectorAll('.casa');
+var statusGame = document.getElementById("resultado");
+const WINS_POSSIBLE = [
+[1,2,3],
+[4,5,6],
+[7,8,9],
+[1,5,9],
+[3,5,7],
+[1,4,7],
+[2,5,8],
+[3,6,9]
+];
+
+
+function init(){
+
+    btnRestart()
+    PLAYER_TIME = 'X';
+    marks = [];
+    playsPossible = WINS_POSSIBLE
+    casas.forEach((item, index) => {
+        //console.log(index,item)
+        item.addEventListener('click', marcar)
+        
+    })
+
+    btnIA.addEventListener("click", activeIA);
+
+    
+}
+
+function updateScore(){
+    let score = document.querySelector('.scoreboard').querySelectorAll('div')
+    score.forEach((element, index)=>{
+        element.innerHTML = scoreboard[index];
+    })
+    
+}
+
+function activeIA(){
+    IA = !IA;
+    IA ? btnIA.innerHTML = "MAQUINA: ON" : btnIA.innerHTML = "MAQUINA: OFF";
+    
+}
+
+function btnRestart(hide = false){
+
+    if(hide) return restartBtn.style="display:inline-block;";
+    restartBtn.style="display:none;"
+    restartBtn.addEventListener('click', restartGame, {once:true});
+
+}
+
+function changePlayer(){
+
+    PLAYER_TIME === 'X' ? PLAYER_TIME = 'O' : PLAYER_TIME = 'X';
+
+}
+
+function validPlay(local){
+
+    return (local.innerHTML == '')
+}
+
+function cellElement(id){
+
+    if(casas[id-1].innerHTML != "") return casas[id-1].innerHTML
+
+}
+
+function setCellElement(id){
+    casas[id-1].click()
+    
+}
+
+function endGame(){
+   
+    casas.forEach((item, index)=>{
+       item.removeEventListener("click", marcar)
+    })
+
+}
+
+const marcar = (e)=>{
+    if(validPlay(e.target)) { // VERIFICA SE É JOGADA VALIDA
+
+        e.target.innerHTML = PLAYER_TIME
+        marks.push(e.target.innerHTML)
+
+        if(isWinner()){ // Verifica se há vitória
+
+            statusGame.innerHTML = `'${PLAYER_TIME}' WINNER`
+            switch(PLAYER_TIME){
+                case 'X':
+                    scoreboard[0]++;
+                break;
+                case 'O':
+                    scoreboard[1]++;
+                break;
+            }
+            updateScore()
+            endGame();
+            btnRestart(true)
+
+        } else{
+
+            if(isDraw()){
+                // Jogo empatou
+                scoreboard[2]++;
+                updateScore()
+                statusGame.innerHTML = "EMPATE!";
+                btnRestart(true)
+
+            }else{
+                // Jogo continua (Sem empate, sem Vitoria e jogadas disponiveis ainda.
+                changePlayer();
+                if(PLAYER_TIME == "O" && IA) IAcheck();
+
+            }
+            
+        }
+
+    } else { // EVITA JOGADA INDEVIDA
+
+        alert("Jogada indevida!")
+
+    }
+
+}
+
+function isDraw(){
+
+    return (marks.length == 9);
+
+}
+
+function isWinner(){
+
+    return WINS_POSSIBLE.some((combination)=>{
+        return combination.every((id)=>{
+            return (cellElement(id) == PLAYER_TIME)
+        })
+    })
+
+}
+
+const restartGame = (e)=> {
+
+    init();
+    casas.forEach((casa)=>{
+        casa.innerHTML = "";
+    })
+    statusGame.innerHTML = "JOGO DA VELHA"
+
+}
+
+function IAmark(combination){
+    let id=0;
+    combination.some((element)=>{
+        if(cellElement(element) == undefined) id = element
+        
+    })
+    setCellElement(id)
+    
+
+}
+
+function IAcheck(){
+    let aX = [];
+    let aO = [];
+    let init = [];
+    let win = [];
+    let risk = [];
+    let trywin = [];
+    WINS_POSSIBLE.forEach((combination)=>{
+        let X=0;
+        let O=0;
+        combination.forEach((elements)=>{
+            
+            if(cellElement(elements) == 'X') X++;
+            if(cellElement(elements) == 'O') O++;
+
+        })
+        aX.push(X);
+        aO.push(O);
+        
+    })
+    aO.forEach((element, index)=>{
+        switch(element){
+            case 0:
+                if(aX[index] == 2){
+                    risk.push(WINS_POSSIBLE[index])
+                } else if(aX[index] == 1){
+                    init.push(WINS_POSSIBLE[index])
+                }
+            break;
+            case 1:
+                if(aX[index] == 0) trywin.push(WINS_POSSIBLE[index])
+                else if(aX[index] == 1) init.push(WINS_POSSIBLE[index])
+            break;
+            
+            case 2:
+                if(aX[index] == 0){
+                    win.push(WINS_POSSIBLE[index])
+                }
+            break;
+        }
+        
+    })
+
+    if(win.length > 0) {
+        return IAcheckInit(win)
+    }else if(risk.length > 0) {
+        return IAcheckInit(risk)
+    }else if(trywin.length > 0) {
+        return IAcheckInit(trywin)
+    }else if(init.length > 0) IAcheckInit(init)
+    
+}
+
+function IAcheckInit(init){
+    let numbers = []
+    init.forEach((element)=>{ element.forEach((num, i)=>{
+    if(cellElement(num) == undefined) {
+        numbers.push(num)
+    }
+    });  
+})
+IArandomPlay(numbers)
+}
+
+function IArandomPlay(combination){
+    let idPlay = []
+    idPlay.push(combination[Math.floor(Math.random() * combination.length)])
+    IAmark(idPlay)
+}
+
+activeIA();
+updateScore()
+init();
+
+
+<DOCTYPE html>
+<html>
+<head lang="pt">
+    <link rel="stylesheet" type="text/css" href="estilo.css"/>   
+    </head>
+<body>
+        <div id="jogo">
+            <button id="buttonIA">MAQUINA: OFF</button>
+            <div class="linha">
+                <div class="casa" id="casa1"></div>
+                <div class="casa" id="casa2"></div>
+                <div class="casa" id="casa3"></div>
+            </div>
+            <div class="linha">
+                <div class="casa" id="casa4"></div>
+                <div class="casa" id="casa5"></div>
+                <div class="casa" id="casa6"></div>
+            </div>
+            <div class="linha">
+                <div class="casa" id="casa7"></div>
+                <div class="casa" id="casa8"></div>
+                <div class="casa" id="casa9"></div>
+            </div>
+            <div id="resultado">JOGO DA VELHA</div>
+            <div class="scoreboard">
+                <span class="wins">WINS:</span>
+                <div class="wins" id="score-win"></div>
+                <span class="loss">LOSS:</span>
+                <div class="loss" id="score-loss"></div>
+                <span>DRAW:</span>
+                <div class="draw" id="score-draw"></div>
+            </div>
+            <button id="button" hidden>RESTART</button>
+            
+            
+            
+        </div>
+        <div class="author">
+        </div>
+        
+
+        <script src="functions.js"></script>
+</body>
+</html>
